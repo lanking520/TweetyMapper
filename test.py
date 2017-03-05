@@ -24,19 +24,19 @@ class MyStreamListener(tweepy.StreamListener):
     def process(self, data):
         keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
         content = data['text'].lower()
-        #print("+++++")
+        #Sprint("+++++")
         if any(x in content for x in keywords):
             if (data['coordinates'] is not None) and (('lang' not in data) or (data['lang']=='en')):
-            	print "Find a Match"
-                # print("------")
-                # print(data['text'])
-                # print(data['coordinates'])
-                # print(data['created_at'])
-                # print(data['timestamp_ms'])
-                # print(data['created_at'])
-                # print(data['user']['name'])
-                # print(data['user']['screen_name'])
-                # print("------")
+            	#print "Find a Match"
+                print("------")
+                print(data['text'])
+                print(data['coordinates'])
+                print(data['created_at'])
+                print(data['timestamp_ms'])
+                print(data['created_at'])
+                print(data['user']['name'])
+                print(data['user']['screen_name'])
+                print("------")
                 tweet_dict = {'text': data['text'],
                              'coordinates': data['coordinates']['coordinates'],
                              'created_at': data['created_at'],
@@ -54,6 +54,6 @@ if __name__ == '__main__':
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     myStream = tweepy.Stream(auth, myStreamListener)
-    keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
+    keywords = ["food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
     locations = [-180,-90,180,90]
     myStream.filter(track=keywords, locations=locations)
