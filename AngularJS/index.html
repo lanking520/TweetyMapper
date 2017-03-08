@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="ngMap">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tweety!</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Basic Module input -->
+    <script src = "js/angular.min.js"></script>
+    <!-- Map API -->
+    <script src="js/ng-map.min.js"></script>
+    <script src="js/mymap.js"></script>
+    <script src="js/markerclusterer.js"></script>
+    <script src="js/markers.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDjDW2uc8oNBoXDuki-Fle2VSKyWazRRrQ"></script>
+  </head>
+
+<body ng-controller="MyController">
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">TweetyMapper</a>
+        </div>
+      </div>
+    </nav>
+    <br><br><br>
+    <div class="container">
+      <div class="jumbotron">
+          <h2>Hello! Welcome To TweepyMapper</h2>
+          <p class="lead">Search your favourite Words in here:</p>
+           <div class="input-group input-group-lg">
+          <span class="input-group-addon" id="sizing-addon1">Search Word</span>
+          <input type="text" class="form-control" ng-model="$parent.targetstock" placeholder="Word: job, apple, nvidia, etc" aria-describedby="sizing-addon1">
+          </div>
+     </div>
+   </div>
+   <div class="container">
+    <ng-map center="[40.74, -74.18]"></ng-map>
+   </div>
+</body>
+</html>
