@@ -25,14 +25,13 @@ class ESSearch():
 		for key in wordlist:
 			data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': key}}}})
 			data = data['hits']['hits']
-			tweets = []
 			for part in data:
-				tweets.append(part["_source"]['coordinates'])
-		return {"Coordinates": tweets}
+				tweets.append({"position":part["_source"]['coordinates']})
+		return tweets
 
 if __name__ == "__main__":
 	data = ESSearch()
 	while True:
-		print data.draftsearch(["music","job"])
+		print json.dumps(data.draftsearch(["music","job","food", "sport"]))
 		print ""
 		time.sleep(1)

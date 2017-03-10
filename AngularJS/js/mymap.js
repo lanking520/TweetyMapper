@@ -11,8 +11,8 @@ app.controller('MyController', function($http, $scope, $interval, NgMap) {
       vm.dynMarkers = [];
       $scope.words[$scope.word] = true
       NgMap.getMap().then(function(map) {
-      for (var i=0; i<1000; i++) {
-        var latLng = new google.maps.LatLng(markers[i].position[0], markers[i].position[1]);
+      for (var i=0; i<markers.length; i++) {
+        var latLng = new google.maps.LatLng(markers[i].position[1], markers[i].position[0]);
         vm.dynMarkers.push(new google.maps.Marker({position:latLng}));
       }
       vm.markerClusterer = new MarkerClusterer(map, vm.dynMarkers, {});

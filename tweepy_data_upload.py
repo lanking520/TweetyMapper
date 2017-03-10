@@ -28,18 +28,19 @@ class DataUploadStreamListener(tweepy.StreamListener):
     def process(self, data):
         keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
         content = data['text'].lower()
-        print("+++++")
+        #print("+++++")
         if any(x in content for x in keywords):
             if (data['coordinates'] is not None) and (('lang' not in data) or (data['lang']=='en')): # data[coordinates] may be null, want to filter it out
-                print("------")
-                print(data['text'])
-                print(data['coordinates'])
-                print(data['created_at'])
-                print(data['timestamp_ms'])
-                print(data['created_at'])
-                print(data['user']['name'])
-                print(data['user']['screen_name'])
-                print("------")
+                # print("------")
+                # print(data['text'])
+                # print(data['coordinates'])
+                # print(data['created_at'])
+                # print(data['timestamp_ms'])
+                # print(data['created_at'])
+                # print(data['user']['name'])
+                # print(data['user']['screen_name'])
+                # print("------")
+                print "Find a match"
                 tweet_dict = {'text': data['text'],
                              'coordinates': data['coordinates']['coordinates'],
                              'created_at': data['created_at'],
