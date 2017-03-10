@@ -3,13 +3,13 @@ import json
 from elasticsearch import Elasticsearch
 
 #Variables that contains the user credentials to access Twitter API
-access_token = "Fill in Access Token"
-access_token_secret = "Fill in Access Secret"
-consumer_key = "Fill in Consumer Key"
-consumer_secret = "Fill in Consumer Secret"
+consumer_key="ElLAEYVqoWEQ62CThiph88Q01"
+consumer_secret="Zbh6Z9hK9wEIExaRXzFoJENaQy5bPm5TLnoVkavKcDdDgGKiOv"
+access_token="887932914-U1gobak10He0VbMIVTcRUkQeLudpBybyuRx3zbAf"
+access_token_secret="ZV7Iy5E4cMyzKN1SbWiFqKaeGOIkYDZmAH9oXAN3dnX4B"
 
 class DataUploadStreamListener(tweepy.StreamListener):
-    es = Elasticsearch([{'host': 'somehost.es.amazonaws.com', 'port': 80}])
+    es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
     def on_status(self, status):
         try:

@@ -28,15 +28,16 @@ class MyStreamListener(tweepy.StreamListener):
         if any(x in content for x in keywords):
             if (data['coordinates'] is not None) and (('lang' not in data) or (data['lang']=='en')):
             	#print "Find a Match"
-                print("------")
-                print(data['text'])
-                print(data['coordinates'])
-                print(data['created_at'])
-                print(data['timestamp_ms'])
-                print(data['created_at'])
-                print(data['user']['name'])
-                print(data['user']['screen_name'])
-                print("------")
+                # print("------")
+                # print(data['text'])
+                # print(data['coordinates'])
+                # print(data['created_at'])
+                # print(data['timestamp_ms'])
+                # print(data['created_at'])
+                # print(data['user']['name'])
+                # print(data['user']['screen_name'])
+                # print("------")
+                print "Find a Match"
                 tweet_dict = {'text': data['text'],
                              'coordinates': data['coordinates']['coordinates'],
                              'created_at': data['created_at'],
