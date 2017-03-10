@@ -15,6 +15,8 @@ app.controller('MyController', function($http, $scope, $interval, NgMap) {
       $scope.words[$scope.word] = true;
       vm.markerClusterer.clearMarkers();
       vm.dynMarkers = [];
+      // Implement a HTTP Getter in here namely markers
+      // Sample data format see in markers.js
       for (var i=0; i<markers.length; i++) {
         var latLng = new google.maps.LatLng(markers[i].position[1], markers[i].position[0]);
         vm.dynMarkers.push(new google.maps.Marker({position:latLng}));
