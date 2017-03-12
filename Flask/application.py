@@ -3,8 +3,8 @@ from flask import jsonify
 from flask import render_template
 from flask import send_file
 
-from read_data import DataReader
-from essearch import ESSearch
+# from read_data import DataReader
+# from essearch import ESSearch
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
@@ -15,38 +15,39 @@ def pre_load_fixed_data():
     data = DataReader()
     return data.read("static/data/tweets.txt", keywords)
 
-tweets_json = pre_load_fixed_data()
+# tweets_json = pre_load_fixed_data()
 
-essearch = ESSearch()
+# essearch = ESSearch()
 
 @application.route('/')
 def index():
     return render_template('index.html')
 
-@application.route('/searchf/')
-@application.route('/searchf/<keyword>')
-def searchf(keyword=None):
-    if keyword is None:
-        to_return = jsonify(**tweets_json)
-    else:
-        tweets_of_keyword = {keyword: []}
-        if keyword in tweets_json:
-            tweets_of_keyword = {keyword: tweets_json[keyword]}
-        to_return = jsonify(**tweets_of_keyword)
-    return to_return
+# @application.route('/searchf/')
+# @application.route('/searchf/<keyword>')
+# def searchf(keyword=None):
+#     if keyword is None:
+#         to_return = jsonify(**tweets_json)
+#     else:
+#         tweets_of_keyword = {keyword: []}
+#         if keyword in tweets_json:
+#             tweets_of_keyword = {keyword: tweets_json[keyword]}
+#         to_return = jsonify(**tweets_of_keyword)
+#     return to_return
 
-@application.route('/search/')
-@application.route('/search/<keyword>')
-def search(keyword=None):
-    if keyword is None:
-        tweets_of_keyword = {"all": []}
-        to_return = jsonify(**tweets_of_keyword)
-    else:
-        search_result = essearch.search(keyword)
-        to_return = jsonify(**search_result)
-    return to_return
+# @application.route('/search/')
+# @application.route('/search/<keyword>')
+# def search(keyword=None):
+#     if keyword is None:
+#         tweets_of_keyword = {"all": []}
+#         to_return = jsonify(**tweets_of_keyword)
+#     else:
+#         search_result = essearch.search(keyword)
+#         to_return = jsonify(**search_result)
+#     return to_return
 
-@application.route('/images/<filename>')
+@application.route('/img/<filename>')
+# Fix the problem of finding images
 def get_image(filename=None):
     return send_file('static/img/'+filename, mimetype='image/png')
 
