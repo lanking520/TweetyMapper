@@ -9,7 +9,7 @@ access_token="887932914-U1gobak10He0VbMIVTcRUkQeLudpBybyuRx3zbAf"
 access_token_secret="ZV7Iy5E4cMyzKN1SbWiFqKaeGOIkYDZmAH9oXAN3dnX4B"
 
 class DataUploadStreamListener(tweepy.StreamListener):
-    es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+    es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com/',])
 
     def on_status(self, status):
         try:
@@ -40,7 +40,7 @@ class DataUploadStreamListener(tweepy.StreamListener):
                 # print(data['user']['name'])
                 # print(data['user']['screen_name'])
                 # print("------")
-                print "Find a match"
+                print "Find a match " + data['timestamp_ms']
                 tweet_dict = {'text': data['text'],
                              'coordinates': data['coordinates']['coordinates'],
                              'created_at': data['created_at'],
@@ -48,8 +48,6 @@ class DataUploadStreamListener(tweepy.StreamListener):
                              'user_name': data['user']['name'],
                              'user_screen_name': data['user']['screen_name']}
                 self.es.index(index='tweet', doc_type='tweet_data', body=json.loads(json.dumps(tweet_dict)))
-
-
 if __name__ == '__main__':
     duStreamListener = DataUploadStreamListener()
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)

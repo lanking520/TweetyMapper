@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ngMap">
+<html ng-app="myapp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,10 @@
   <!-- Bootstrap core CSS -->
   <link href="../static/css/bootstrap.min.css" rel="stylesheet">
   <!-- Basic Module input -->
-  <script src = "../static/js/angular.min.js"></script>
+  <script src = "../static/js/angular.js"></script>
+  <script src="../static/js/angular-animate.js"></script>
+  <script src="../static/js/angular-sanitize.js"></script>
+  <script src="../static/js/ui-bootstrap-tpls-2.5.0.js"></script>
   <!-- Map API -->
   <script src="../static/js/ng-map.min.js"></script>
   <script src="../static/js/mymap.js"></script>
@@ -29,21 +32,37 @@
 <div class="container">
   <div class="jumbotron">
     <h2>Hello! Welcome To TweepyMapper</h2>
+    {% raw %}
     <p class="lead">Search your favourite Words in here: {{word}}</p>
+    {% endraw %}
     <div class="input-group input-group-lg">
-      <span class="input-group-addon" id="sizing-addon1">Search Word</span>
+    <div class="input-group-btn" uib-dropdown>
+      <button id="oldword" type="button" class="btn btn-info" uib-dropdown-toggle>
+      Search Existed<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="oldword">
+      {% raw %}
+        <li ng-repeat="sword in oldwords">
+          <a ng-click="searchold(sword)">{{sword}}</a>
+        </li>
+      {% endraw %}
+      </ul>
+    </div>
       <input type="text" class="form-control" ng-model="$parent.word" placeholder="Word: job, apple, nvidia, etc" aria-describedby="sizing-addon1">
       <div class="input-group-btn">
         <button type="button" class="btn btn-success" ng-click="searchword()">Search</button>
       </div>
     </div>
     <h4>
-        <span ng-repeat="(key, value) in words" ng-click="deleteword(key)" class="label label-info">{{key}}</span>
-    <h4>
-  </div>
-</div>
-<div class="container">
-  <ng-map center="[40.74, -74.18]"></ng-map>
-</div>
-</body>
-</html>
+      {% raw %}
+      <span ng-repeat="(key, value) in words" ng-click="deleteword(key)" class="label label-info">{{key}}</span>
+      {% endraw %}
+      <h4>
+      </div>
+    </div>
+    <div class="container">
+      <ng-map center="[40.74, -74.18]"></ng-map>
+    </div>
+        
+  </body>
+  </html>

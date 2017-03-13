@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ngMap">
+<html ng-app="myapp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,10 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Basic Module input -->
-  <script src = "js/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
   <!-- Map API -->
   <script src="js/ng-map.min.js"></script>
   <script src="js/mymap.js"></script>
@@ -44,6 +47,18 @@
 </div>
 <div class="container">
   <ng-map center="[40.74, -74.18]"></ng-map>
+</div>
+<div class="btn-group" uib-dropdown>
+      <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+        Button dropdown <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#">Action</a></li>
+        <li role="menuitem"><a href="#">Another action</a></li>
+        <li role="menuitem"><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li role="menuitem"><a href="#">Separated link</a></li>
+      </ul>
 </div>
 </body>
 </html>

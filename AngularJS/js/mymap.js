@@ -1,8 +1,11 @@
-/// </// <reference path="angular.min.js" />
+
 /// </// <reference path="markers.js" />
 /// </// <reference path="js/markerclusterer.js" />
-var app = angular.module('ngMap')
-app.controller('MyController', function($http, $scope, $interval, NgMap) {
+var app = angular.module('myapp',['ngMap','ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+app.controller('MyController', MapCtrl);
+
+
+function MapCtrl($http, $scope, $interval, NgMap) {
     var vm = this;
     $scope.init = function(){
       $scope.words = {}
@@ -26,4 +29,4 @@ app.controller('MyController', function($http, $scope, $interval, NgMap) {
     $scope.deleteword = function(word){
       delete $scope.words[word];
       };
-});
+};

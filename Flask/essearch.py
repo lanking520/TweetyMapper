@@ -10,7 +10,7 @@ import requests
 class ESSearch():
 	def __init__(self, host = 'localhost', port=9200):
 		self.es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com/',])
-		# {'host': host, 'port': port}
+
 	def search(self, keyword):
 		es_data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': keyword}}}})
 		es_results = es_data['hits']['hits']
@@ -26,12 +26,12 @@ class ESSearch():
 			data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': key}}}})
 			data = data['hits']['hits']
 			for part in data:
-				tweets.append({"position":part["_source"]['coordinates']})
+				tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
 		return tweets
 
 if __name__ == "__main__":
 	data = ESSearch()
 	while True:
-		print json.dumps(data.draftsearch(["music","job","food", "sport"]))
-		print "\n\nBreak"
+		print json.dumps(data.draftsearch(["music"]))
+		print ""
 		time.sleep(1)

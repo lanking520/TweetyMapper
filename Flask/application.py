@@ -10,12 +10,12 @@ from flask import send_file
 application = Flask(__name__)
 
 # pre-load fixed tweets
-def pre_load_fixed_data():
-    keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
-    data = DataReader()
-    return data.read("static/data/tweets.txt", keywords)
+# def pre_load_fixed_data():
+#     keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
+#     data = DataReader()
+#     return data.read("static/data/tweets.txt", keywords)
 
-# tweets_json = pre_load_fixed_data()
+# # tweets_json = pre_load_fixed_data()
 
 # essearch = ESSearch()
 
@@ -56,4 +56,4 @@ if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
     #application.debug = True
-    application.run()
+    application.run(host ='0.0.0.0', port=8111, threaded=True)
