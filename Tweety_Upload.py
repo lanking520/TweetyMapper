@@ -52,7 +52,11 @@ if __name__ == '__main__':
     duStreamListener = DataUploadStreamListener()
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    duStream = tweepy.Stream(auth, duStreamListener)
     keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
     locations = [-180,-90,180,90]
-    duStream.filter(track=keywords, locations=locations)
+    while True:
+        try:
+            duStream = tweepy.Stream(auth, duStreamListener)
+            duStream.filter(track=keywords, locations=locations)
+        except:
+            continue
