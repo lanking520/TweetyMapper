@@ -44,7 +44,6 @@ function MapCtrl($http, $scope, NgMap){
     };
     $scope.searchword = function(){
       $scope.words[$scope.word] = true;
-      console.log($scope.word);
       console.log($scope.words);
       updater(vm, $scope, $http);
     };
@@ -61,7 +60,7 @@ function MapCtrl($http, $scope, NgMap){
       delete $scope.words[word];
       console.log($scope.words);
       if(Object.keys($scope.words).length === 0){
-        return;
+        vm.markerClusterer.clearMarkers();
       }
       else{
         updater(vm, $scope, $http);
