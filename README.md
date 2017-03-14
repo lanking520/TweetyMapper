@@ -1,6 +1,7 @@
 # TwittMap
 Qing Lan and Xiyan Liu
 
+HW Group 18
 ### Note
 Click [TweetyMapper](http://lowcost-env.k37mkpdspy.us-east-1.elasticbeanstalk.com/) to go to our Web App
 
