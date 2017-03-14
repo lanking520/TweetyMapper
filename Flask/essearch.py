@@ -27,11 +27,11 @@ class ESSearch():
 			data = data['hits']['hits']
 			for part in data:
 				tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
-		return tweets
+		return {"result":tweets}
 
 if __name__ == "__main__":
 	data = ESSearch()
 	while True:
-		print json.dumps(data.draftsearch(["music"]))
+		print json.dumps(data.draftsearch(["hello"]))
 		print ""
 		time.sleep(1)

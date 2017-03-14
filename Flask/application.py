@@ -1,14 +1,11 @@
-from flask import Flask
-from flask import jsonify
-from flask import render_template
-from flask import send_file
-
+from flask import Flask, request, jsonify, render_template, send_file
+from flask_cors import CORS, cross_origin
 # from read_data import DataReader
-# from essearch import ESSearch
+from essearch import ESSearch
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
-
+CORS(application)
 # pre-load fixed tweets
 # def pre_load_fixed_data():
 #     keywords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"]
@@ -17,7 +14,7 @@ application = Flask(__name__)
 
 # # tweets_json = pre_load_fixed_data()
 
-# essearch = ESSearch()
+essearch = ESSearch()
 
 @application.route('/')
 def index():
@@ -35,16 +32,19 @@ def index():
 #         to_return = jsonify(**tweets_of_keyword)
 #     return to_return
 
-# @application.route('/search/')
-# @application.route('/search/<keyword>')
-# def search(keyword=None):
-#     if keyword is None:
-#         tweets_of_keyword = {"all": []}
-#         to_return = jsonify(**tweets_of_keyword)
-#     else:
-#         search_result = essearch.search(keyword)
-#         to_return = jsonify(**search_result)
-#     return to_return
+@application.route('/search',methods=['POST'])
+def search():
+    data = request.get_json()
+    print data
+    if data["keyword"]:
+        to_return = essearch.draftsearch(data["keyword"])
+    else:
+    	to_return = {}
+    return jsonify(**to_return)
+    # else:
+    #     search_result = essearch.search(keyword)
+    #     to_return = jsonify(**search_result)
+    # return to_return
 
 @application.route('/img/<filename>')
 # Fix the problem of finding images
@@ -56,4 +56,5 @@ if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
     #application.debug = True
-    application.run(host ='0.0.0.0', port=8111, threaded=True)
+    application.threaded = True
+    application.run(host ='0.0.0.0', port=8116)
