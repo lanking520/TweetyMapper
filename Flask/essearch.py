@@ -5,10 +5,9 @@ import requests
 
 #es = Elasticsearch([{'host': 'somehost.es.amazonaws.com', 'port': 80}])
 
-#let's iterate over swapi people documents and index them
 
 class ESSearch():
-	def __init__(self, host = 'localhost', port=9200):
+	def __init__(self):
 		self.es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com/',])
 
 	def search(self, keyword):
@@ -29,9 +28,3 @@ class ESSearch():
 				tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
 		return {"result":tweets}
 
-if __name__ == "__main__":
-	data = ESSearch()
-	while True:
-		print json.dumps(data.draftsearch(["hello"]))
-		print ""
-		time.sleep(1)

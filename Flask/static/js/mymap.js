@@ -1,6 +1,6 @@
 /// </// <reference path="markers.js" />
 /// </// <reference path="js/markerclusterer.js" />
-var preUrl = "http://0.0.0.0:8116"
+var preUrl = "http://127.0.0.1:5000"
 var app = angular.module('myapp',['ngMap','ngAnimate', 'ngSanitize', 'ui.bootstrap'])
 app.controller('MyController', MapCtrl);
 
@@ -19,7 +19,7 @@ function updater(vm, $scope, $http){
   vm.markerClusterer.clearMarkers();
   vm.dynMarkers = [];
   $http({
-            url: preUrl+"/search",
+            url: "/search",
             method: "POST",
             data: {"keyword":Object.keys($scope.words)}
         }).then(function (success){
