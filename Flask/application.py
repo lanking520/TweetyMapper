@@ -36,9 +36,13 @@ def index():
 def search():
     data = request.get_json()
     if data["keyword"]:
-        to_return = essearch.draftsearch(data["keyword"])
+        if data.has_key("filter") and data["filter"]:
+            to_return = essearch.draftsearch(data["keyword"],data["filter"])
+        else:
+            to_return = essearch.draftsearch(data["keyword"])
     else:
     	to_return = {}
+
     return jsonify(**to_return)
     # else:
     #     search_result = essearch.search(keyword)

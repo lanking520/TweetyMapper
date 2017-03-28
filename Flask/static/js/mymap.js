@@ -15,13 +15,14 @@ function Markerer (latLng, mmmap, tweet){
           return marker;
 }
 
-function updater(vm, $scope, $http){
+function updater(vm, $scope, $http, filters = null){
   vm.markerClusterer.clearMarkers();
   vm.dynMarkers = [];
+  obj = {"keyword":Object.keys($scope.words),"filter":filters};
   $http({
             url: "/search",
             method: "POST",
-            data: {"keyword":Object.keys($scope.words)}
+            data: obj
         }).then(function (success){
           markers = success["data"]["result"];
           for (var i=0; i<markers.length; i++) {
@@ -58,12 +59,19 @@ function MapCtrl($http, $scope, NgMap){
 
     $scope.deleteword = function(word){
       delete $scope.words[word];
-      console.log($scope.words);
+      //console.log($scope.words);
       if(Object.keys($scope.words).length === 0){
         vm.markerClusterer.clearMarkers();
       }
       else{
         updater(vm, $scope, $http);
+      }
+    };
+
+    $scope.getpos = function(event) {
+      Latlgn = [event.latLng.lng(),event.latLng.lat()];
+      if(Object.keys($scope.words).length != 0){
+        updater(vm, $scope, $http, Latlgn);
       }
     };
 };
