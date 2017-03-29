@@ -3,10 +3,10 @@ import json
 from elasticsearch import Elasticsearch
 
 #Variables that contains the user credentials to access Twitter API
-consumer_key="ElLAEYVqoWEQ62CThiph88Q01"
-consumer_secret="Zbh6Z9hK9wEIExaRXzFoJENaQy5bPm5TLnoVkavKcDdDgGKiOv"
-access_token="887932914-U1gobak10He0VbMIVTcRUkQeLudpBybyuRx3zbAf"
-access_token_secret="ZV7Iy5E4cMyzKN1SbWiFqKaeGOIkYDZmAH9oXAN3dnX4B"
+consumer_key="Please Fill In"
+consumer_secret="Please Fill In"
+access_token="Please Fill In"
+access_token_secret="Please Fill In"
 
 class DataUploadStreamListener(tweepy.StreamListener):
     es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com/',])

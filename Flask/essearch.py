@@ -9,7 +9,7 @@ import requests
 
 class ESSearch():
 	def __init__(self):
-		self.es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com/',])
+		self.es = Elasticsearch(['path_to_es',])
 
 	def search(self, keyword):
 		es_data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': keyword}}}})

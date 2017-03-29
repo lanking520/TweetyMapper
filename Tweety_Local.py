@@ -1,10 +1,10 @@
 import tweepy
 import json
 
-consumer_key="ElLAEYVqoWEQ62CThiph88Q01"
-consumer_secret="Zbh6Z9hK9wEIExaRXzFoJENaQy5bPm5TLnoVkavKcDdDgGKiOv"
-access_token="887932914-U1gobak10He0VbMIVTcRUkQeLudpBybyuRx3zbAf"
-access_token_secret="ZV7Iy5E4cMyzKN1SbWiFqKaeGOIkYDZmAH9oXAN3dnX4B"
+consumer_key="Please Fill In"
+consumer_secret="Please Fill In"
+access_token="Please Fill In"
+access_token_secret="Please Fill In"
 
 class MyStreamListener(tweepy.StreamListener):
     def on_status(self, status):
