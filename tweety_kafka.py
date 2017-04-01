@@ -1,4 +1,3 @@
-
 import tweepy
 # from kafka import KafkaClient
 from kafka import KafkaProducer
