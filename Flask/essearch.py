@@ -34,3 +34,6 @@ class ESSearch():
 					tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
 		return {"result":tweets}
 
+	def upload(self, data):
+		self.es.index(index='tweet', doc_type='tweet_data', body=json.loads(json.dumps(tweet_dict)))
+

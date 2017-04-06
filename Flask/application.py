@@ -49,6 +49,10 @@ def search():
     #     to_return = jsonify(**search_result)
     # return to_return
 
+@application.route('/upload',methods=['PUT,POST'])
+def uploadES():
+    # TODO: Add Functionalities to Upload to ES
+
 @application.route('/img/<filename>')
 # Fix the problem of finding images
 def get_image(filename=None):
