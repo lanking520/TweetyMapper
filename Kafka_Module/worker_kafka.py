@@ -8,7 +8,7 @@ alchemy_api_key = "f2a40969214d57623993c2f998ef7bdf12d8062f"
 
 class SQSSNSWorkerPool:
     def __init__(self, num_threads=2):
-    	this.consumer = KafkaConsumer('twitterstream')
+    	self.consumer = KafkaConsumer("twitterstream", group_id='my-group', max_poll_records=5, auto_offset_reset='earliest', enable_auto_commit=True)
         self.alchemy_language = AlchemyLanguageV1(api_key=alchemy_api_key)
         sns_client = boto3.client('sns')
         topic_arn = sns_client.create_topic( Name='tweet')
@@ -18,9 +18,11 @@ class SQSSNSWorkerPool:
 
     def start(self):
         while True:
-            messages = self.queue.receive_messages(MaxNumberOfMessages=10, WaitTimeSeconds=20)
+            messages = self.consumer.poll(timeout_ms=2000)
+            # Add Handler for Empty Message Body
             print "Retrieved " + str(len(messages)) + " messages from sqs"
             self.pool.map(self.work, messages)
+            # Sleep for 1 second if the message body is empty
 
     def work(self, message):
         try:

@@ -27,8 +27,6 @@ class DataUploadStreamListener(tweepy.StreamListener):
     def on_error(self, status_code, data):
         print ("Error: ", status_code, ": ", data)
 
-        # Want to stop trying to get data because of the error?
-        # Uncomment the next line!
         if status_code == 420: # Rate limited!
             return False
 
