@@ -52,6 +52,22 @@ def search():
 @application.route('/upload',methods=['PUT,POST'])
 def uploadES():
     # TODO: Add Functionalities to Upload to ES
+    header = request.headers.get('x-amz-sns-message-type')
+    try:
+        data = json.loads(request.data)
+    except:
+        pass
+    if header == 'SubscriptionConfirmation' and 'SubscribeURL' in data:
+        url = data['SubscribeURL']
+        response = requests.get(url)
+        print "Subscribed to SNS: " + url
+        return "Subscribed to SNS: " + url
+    if header == 'Notification':
+        print data['Message']
+        search_result = esearch.upload(data['Message'])
+        new_tweets.append(data['Message'])
+        return data['Message']
+    return "ok"
 
 @application.route('/img/<filename>')
 # Fix the problem of finding images

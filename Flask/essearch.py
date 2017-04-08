@@ -4,12 +4,10 @@ import time
 import math
 import requests
 
-#es = Elasticsearch([{'host': 'somehost.es.amazonaws.com', 'port': 80}])
-
 
 class ESSearch():
 	def __init__(self):
-		self.es = Elasticsearch(['path_to_es',])
+		self.es = Elasticsearch(['search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com',])
 
 	def search(self, keyword):
 		es_data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': keyword}}}})
