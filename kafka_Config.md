@@ -9,7 +9,13 @@ sudo iptables -A OUTPUT -p tcp -m tcp --dport 90 -j ACCEPT
 
 ## KAFKA Allocate memory
 ```
-export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+$ export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+```
+
+## Start Machine
+```
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
+$ bin/kafka-server-start.sh config/server.properties
 ```
 
 ## Problem No Node found
