@@ -3,42 +3,52 @@ import multiprocessing
 from multiprocessing.dummy import Pool as ThreadPool
 import boto3
 import json
+import time
+from kafka import KafkaConsumer
 
 alchemy_api_key = "f2a40969214d57623993c2f998ef7bdf12d8062f"
+AWS_ACCESS_KEY = "AKIAI3AUPHHLWCOUUKMA"
+AWS_SECRET_KEY = "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"
 
-class SQSSNSWorkerPool:
+class KafkaSNSWorkerPool:
     def __init__(self, num_threads=2):
-    	self.consumer = KafkaConsumer("twitterstream", group_id='my-group', max_poll_records=5, auto_offset_reset='earliest', enable_auto_commit=True)
+    	self.consumer = KafkaConsumer("twitterstream", group_id='my-group', max_poll_records=5, auto_offset_reset='earliest', enable_auto_commit=True, bootstrap_servers=['localhost:9092'])
         self.alchemy_language = AlchemyLanguageV1(api_key=alchemy_api_key)
-        sns_client = boto3.client('sns')
-        topic_arn = sns_client.create_topic( Name='tweet')
-        sns = boto3.resource('sns')
-        self.topic = sns.Topic(topic_arn['TopicArn'])
+        # sns_client = boto3.client('sns')
+        # topic_arn = sns_client.create_topic( Name='tweet')
+
+        # sns service 
+        self.sns = boto3.client('sns', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+        self.topic_arn = self.sns.create_topic(Name='tweet')['TopicArn']
+
         self.pool = ThreadPool(num_threads)
 
     def start(self):
         while True:
             messages = self.consumer.poll(timeout_ms=2000)
-            # Add Handler for Empty Message Body
-            print "Retrieved " + str(len(messages)) + " messages from sqs"
-            self.pool.map(self.work, messages)
+            try:
+                messages = messages.values()[0]
+                print "Retrieved " + str(len(messages)) + " messages from Kafka"
+                self.pool.map(self.work, messages)
+            except:
+                print "No Messages..."
+                time.sleep(1)
             # Sleep for 1 second if the message body is empty
 
     def work(self, message):
         try:
             print "Worker: " + str(multiprocessing.dummy.current_process())
-            data = json.loads(message.body)
+            data = json.loads(message.value)
             tweet_text = data['text']
             sentiment = self.alchemy_language.sentiment(text=tweet_text)
             data['sentiment'] = sentiment['docSentiment']['type']
             print data['sentiment']
-            self.topic.publish(Message=json.dumps(data))
+            self.sns.publish(TopicArn=self.topic_arn,Message=json.dumps(data))
         except Exception as e:
             print e
-        finally:
-            message.delete()
+
 
 if __name__ == '__main__':
-    workerPool = SQSSNSWorkerPool()
+    workerPool = KafkaSNSWorkerPool()
     workerPool.start()
 
