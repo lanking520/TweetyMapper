@@ -3,6 +3,7 @@ import multiprocessing
 from multiprocessing.dummy import Pool as ThreadPool
 import boto3
 import json
+import time
 
 alchemy_api_key = "f2a40969214d57623993c2f998ef7bdf12d8062f"
 AWS_ACCESS_KEY = "AKIAI3AUPHHLWCOUUKMA"
@@ -23,8 +24,13 @@ class SQSSNSWorkerPool:
         while True:
             messages = self.sqs.receive_message(QueueUrl=self.queueUrl, MaxNumberOfMessages=5, WaitTimeSeconds=20)
             # Add Handler for Empty Message Body
-            print "Retrieved " + str(len(messages)) + " messages from sqs"
-            self.pool.map(self.work, messages['Messages'])
+            if messages.has_key('Message'):
+                print messages
+                print "Retrieved " + str(len(messages)) + " messages from sqs"
+                self.pool.map(self.work, messages['Messages'])
+            else:
+                print "No messages received..."
+                time.sleep(1)
             # Sleep for 1 second if the message body is empty
 
     def work(self, message):
