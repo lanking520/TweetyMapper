@@ -67,7 +67,7 @@ def uploadES():
     if header == 'Notification':
         print data['Message']
         search_result = essearch.upload(data['Message'])
-        new_tweets.append(data['Message'])
+        new_tweets.append(json.loads(data['Message']))
         return data['Message']
     if len(new_tweets) > 100:
         new_tweets = []

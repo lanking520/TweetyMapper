@@ -47,7 +47,7 @@ function MapCtrl($http, $scope, $interval, NgMap){
           markers = success["data"]["result"];
           if(markers.length > 0){
             for (var i=0; i<markers.length; i++) {
-            var latLng = new google.maps.LatLng(markers[i].position[1], markers[i].position[0]);
+            var latLng = new google.maps.LatLng(markers[i].coordinates[1], markers[i].coordinates[0]);
             vm.dynMarkers.push(Markerer(latLng, vm.map, markers[i].text,$scope.sentimentlib[markers[i].sentiment]));
             }
             vm.markerClusterer = new MarkerClusterer(vm.map, vm.dynMarkers, {});
