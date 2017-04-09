@@ -7,7 +7,7 @@ import requests
 
 class ESSearch():
 	def __init__(self):
-		self.es = Elasticsearch(['search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com',])
+		self.es = Elasticsearch(['https://search-tweetymapper-6vgtkoygmxpi7j6zlz35qmddjy.us-east-1.es.amazonaws.com',])
 
 	def search(self, keyword):
 		es_data = self.es.search(index="tweet", size=2000, body={"query": {"match": {'text':{'query': keyword}}}})
@@ -27,11 +27,11 @@ class ESSearch():
 				if filters:
 					Latlgn = part["_source"]['coordinates']
 					if math.pow(filters[0]-Latlgn[0],2)+math.pow(filters[1]-Latlgn[1],2) < 0.5:
-						tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
+						tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text'],"sentiment":part["_source"]['sentiment']})
 				else:
 					tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
 		return {"result":tweets}
 
 	def upload(self, data):
-		self.es.index(index='tweet', doc_type='tweet_data', body=json.loads(json.dumps(tweet_dict)))
+		self.es.index(index='tweet', doc_type='tweet_data', body=json.loads(json.dumps(data)))
 

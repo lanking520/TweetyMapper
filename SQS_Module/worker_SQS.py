@@ -16,7 +16,7 @@ class SQSSNSWorkerPool:
         self.alchemy_language = AlchemyLanguageV1(api_key=alchemy_api_key)
 
         self.sns = boto3.client('sns', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
-        self.topic_arn = self.sns.create_topic( Name='tweet')
+        self.topic_arn = self.sns.create_topic( Name='tweet')['TopicArn']
         self.pool = ThreadPool(num_threads)
 
     def start(self):
@@ -30,7 +30,7 @@ class SQSSNSWorkerPool:
     def work(self, message):
         try:
             print "Worker: " + str(multiprocessing.dummy.current_process())
-            data = json.loads(message.Body)
+            data = json.loads(message['Body'])
             tweet_text = data['text']
             sentiment = self.alchemy_language.sentiment(text=tweet_text)
             data['sentiment'] = sentiment['docSentiment']['type']

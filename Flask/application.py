@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify, render_template, send_file
 from flask_cors import CORS, cross_origin
 # from read_data import DataReader
 from essearch import ESSearch
-
+import json
+import requests
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
 CORS(application)
@@ -49,7 +50,7 @@ def search():
     #     to_return = jsonify(**search_result)
     # return to_return
 
-@application.route('/upload',methods=['GET','PUT,POST'])
+@application.route('/upload',methods=['GET','PUT','POST'])
 def uploadES():
     # TODO: Add Functionalities to Upload to ES
     header = request.headers.get('x-amz-sns-message-type')
@@ -64,7 +65,7 @@ def uploadES():
         return "Subscribed to SNS: " + url
     if header == 'Notification':
         print data['Message']
-        search_result = esearch.upload(data['Message'])
+        search_result = essearch.upload(data['Message'])
         #new_tweets.append(data['Message'])
         return data['Message']
     return "ok"
