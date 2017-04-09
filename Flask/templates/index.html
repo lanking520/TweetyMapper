@@ -54,6 +54,11 @@
       <div class="input-group-btn">
         <button type="button" class="btn btn-success" ng-click="searchword()">Search</button>
       </div>
+      {% raw %}
+      <div class="input-group-btn" ng-hide="hideupdate">
+        <button type="button" class="btn btn-info" ng-click="fetchupdate()">Updates {{numofupdates}}</button>
+      </div>
+      {% endraw %}
     </div>
     <h4>
     Click Tag to Remove words:
