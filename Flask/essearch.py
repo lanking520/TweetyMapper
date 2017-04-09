@@ -29,7 +29,7 @@ class ESSearch():
 					if math.pow(filters[0]-Latlgn[0],2)+math.pow(filters[1]-Latlgn[1],2) < 0.5:
 						tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text'],"sentiment":part["_source"]['sentiment']})
 				else:
-					tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text']})
+					tweets.append({"position":part["_source"]['coordinates'],"text":part["_source"]['text'],"sentiment":part["_source"]['sentiment']})
 		return {"result":tweets}
 
 	def upload(self, data):

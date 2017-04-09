@@ -5,7 +5,6 @@ var app = angular.module('myapp',['ngMap','ngAnimate', 'ngSanitize', 'ui.bootstr
 app.controller('MyController', MapCtrl);
 
 function Markerer (latLng, mmmap, tweet, sentiment){
-          var sentiment = 'green';
           var infoWin = new google.maps.InfoWindow();
           var marker = new google.maps.Marker({
             position:latLng,
@@ -13,7 +12,6 @@ function Markerer (latLng, mmmap, tweet, sentiment){
           });
           google.maps.event.addListener(marker,'click', function(){
             infoWin.setContent(tweet);
-            infoWindow.setStyle("background-color:" + sentiment);
             infoWin.setPosition(latLng);
             infoWin.open(mmmap);
           });
@@ -32,14 +30,30 @@ function updater(vm, $scope, $http, filters = null){
           markers = success["data"]["result"];
           for (var i=0; i<markers.length; i++) {
             var latLng = new google.maps.LatLng(markers[i].position[1], markers[i].position[0]);
-            vm.dynMarkers.push(Markerer(latLng, vm.map, markers[i].text));
+            vm.dynMarkers.push(Markerer(latLng, vm.map, markers[i].text,$scope.sentimentlib[markers[i].sentiment]));
           }
           vm.markerClusterer = new MarkerClusterer(vm.map, vm.dynMarkers, {});
         },function (error){console.log(error)});
 }
 
-function MapCtrl($http, $scope, NgMap){
+function MapCtrl($http, $scope, $interval, NgMap){
     var vm = this;
+    var updatetweet =function(){
+      if(Object.keys($scope.words).length === 0){
+       $http({
+            url: "/updates",
+            method: "GET"
+        }).then(function(success){
+          markers = success["data"]["result"];
+          if(markers.length > 0){
+            for (var i=0; i<markers.length; i++) {
+            var latLng = new google.maps.LatLng(markers[i].position[1], markers[i].position[0]);
+            vm.dynMarkers.push(Markerer(latLng, vm.map, markers[i].text,$scope.sentimentlib[markers[i].sentiment]));
+            }
+            vm.markerClusterer = new MarkerClusterer(vm.map, vm.dynMarkers, {});
+          };},function (error){console.log(error)});
+      }
+    }
     $scope.init = function(){
       $scope.oldwords = ["music", "food", "sport", "show", "movie", "car", "commercial", "party", "war", "hello"];
       $scope.words = {};
@@ -48,11 +62,14 @@ function MapCtrl($http, $scope, NgMap){
       });
       vm.markerClusterer = new MarkerClusterer(vm.map, [], {});
       $scope.sentimentlib = {"positive":"green","neutral":"blue","negative":"red"};
+      $interval(updatetweet, 2000);
     };
     $scope.searchword = function(){
-      $scope.words[$scope.word] = true;
-      console.log($scope.words);
-      updater(vm, $scope, $http);
+      if($scope.word != ""){
+        $scope.words[$scope.word] = true;
+        console.log($scope.words);
+        updater(vm, $scope, $http);
+      }
     };
       // Implement a HTTP Getter in here namely markers
       // Sample data format see in markers.js

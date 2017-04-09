@@ -14,7 +14,7 @@ CORS(application)
 #     return data.read("static/data/tweets.txt", keywords)
 
 # # tweets_json = pre_load_fixed_data()
-
+new_tweets = []
 essearch = ESSearch()
 
 @application.route('/')
@@ -53,6 +53,7 @@ def search():
 @application.route('/upload',methods=['GET','PUT','POST'])
 def uploadES():
     # TODO: Add Functionalities to Upload to ES
+    global new_tweets
     header = request.headers.get('x-amz-sns-message-type')
     try:
         data = json.loads(request.data)
@@ -66,20 +67,23 @@ def uploadES():
     if header == 'Notification':
         print data['Message']
         search_result = essearch.upload(data['Message'])
-        #new_tweets.append(data['Message'])
+        new_tweets.append(data['Message'])
         return data['Message']
+    if len(new_tweets) > 100:
+        new_tweets = []
     return "ok"
 
 @application.route('/updates', methods=['GET'])
 def updates():
-	if len(new_tweets) > 0:
-		tweets = []
-		while len(new_tweets) > 0 and len(tweets) < 10:
-			tweets.append(new_tweets.pop(0))
-		to_return = {"result":tweets}
-	else:
-		to_return = {"result":[]}
-	return jsonify(**to_return)
+    global new_tweets
+    if len(new_tweets) > 0:
+        tweets = []
+        while len(new_tweets) > 0 and len(tweets) < 10:
+            tweets.append(new_tweets.pop(0))
+        to_return = {"result":tweets}
+    else:
+        to_return = {"result":[]}
+    return jsonify(**to_return)
 
 @application.route('/img/<filename>')
 # Fix the problem of finding images
