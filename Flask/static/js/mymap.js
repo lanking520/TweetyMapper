@@ -4,11 +4,16 @@ var preUrl = "http://127.0.0.1:5000"
 var app = angular.module('myapp',['ngMap','ngAnimate', 'ngSanitize', 'ui.bootstrap'])
 app.controller('MyController', MapCtrl);
 
-function Markerer (latLng, mmmap, tweet){
+function Markerer (latLng, mmmap, tweet, sentiment){
+          var sentiment = 'green';
           var infoWin = new google.maps.InfoWindow();
-          var marker = new google.maps.Marker({position:latLng});
+          var marker = new google.maps.Marker({
+            position:latLng,
+            icon:'http://maps.google.com/mapfiles/ms/icons/'+sentiment+'-dot.png'
+          });
           google.maps.event.addListener(marker,'click', function(){
             infoWin.setContent(tweet);
+            infoWindow.setStyle("background-color:" + sentiment);
             infoWin.setPosition(latLng);
             infoWin.open(mmmap);
           });
@@ -42,6 +47,7 @@ function MapCtrl($http, $scope, NgMap){
         vm.map = map;
       });
       vm.markerClusterer = new MarkerClusterer(vm.map, [], {});
+      $scope.sentimentlib = {"positive":"green","neutral":"blue","negative":"red"};
     };
     $scope.searchword = function(){
       $scope.words[$scope.word] = true;

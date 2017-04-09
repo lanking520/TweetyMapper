@@ -49,7 +49,7 @@ def search():
     #     to_return = jsonify(**search_result)
     # return to_return
 
-@application.route('/upload',methods=['PUT,POST'])
+@application.route('/upload',methods=['GET','PUT,POST'])
 def uploadES():
     # TODO: Add Functionalities to Upload to ES
     header = request.headers.get('x-amz-sns-message-type')
@@ -65,9 +65,20 @@ def uploadES():
     if header == 'Notification':
         print data['Message']
         search_result = esearch.upload(data['Message'])
-        new_tweets.append(data['Message'])
+        #new_tweets.append(data['Message'])
         return data['Message']
     return "ok"
+
+@application.route('/updates', methods=['GET'])
+def updates():
+	if len(new_tweets) > 0:
+		tweets = []
+		while len(new_tweets) > 0 and len(tweets) < 10:
+			tweets.append(new_tweets.pop(0))
+		to_return = {"result":tweets}
+	else:
+		to_return = {"result":[]}
+	return jsonify(**to_return)
 
 @application.route('/img/<filename>')
 # Fix the problem of finding images
