@@ -13,7 +13,6 @@ class SQSSNSWorkerPool:
     def __init__(self, num_threads=2):
     	self.sqs = boto3.client('sqs', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
         self.queueUrl = self.sqs.get_queue_url(QueueName='tweetstream')['QueueUrl']
-
         self.alchemy_language = AlchemyLanguageV1(api_key=alchemy_api_key)
 
         self.sns = boto3.client('sns', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
@@ -24,8 +23,7 @@ class SQSSNSWorkerPool:
         while True:
             messages = self.sqs.receive_message(QueueUrl=self.queueUrl, MaxNumberOfMessages=5, WaitTimeSeconds=20)
             # Add Handler for Empty Message Body
-            if messages.has_key('Message'):
-                print messages
+            if messages.has_key('Messages'):
                 print "Retrieved " + str(len(messages)) + " messages from sqs"
                 self.pool.map(self.work, messages['Messages'])
             else:
