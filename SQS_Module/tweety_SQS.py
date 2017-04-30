@@ -3,12 +3,12 @@ import json
 import boto3
 import time
 
-consumer_key="ElLAEYVqoWEQ62CThiph88Q01"
-consumer_secret="Zbh6Z9hK9wEIExaRXzFoJENaQy5bPm5TLnoVkavKcDdDgGKiOv"
-access_token="887932914-U1gobak10He0VbMIVTcRUkQeLudpBybyuRx3zbAf"
-access_token_secret="ZV7Iy5E4cMyzKN1SbWiFqKaeGOIkYDZmAH9oXAN3dnX4B"
-AWS_ACCESS_KEY = "AKIAI3AUPHHLWCOUUKMA"
-AWS_SECRET_KEY = "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"
+consumer_key="INPUT_KEY_HERE"
+consumer_secret="INPUT_KEY_HERE"
+access_token="INPUT_KEY_HERE"
+access_token_secret="INPUT_KEY_HERE"
+AWS_ACCESS_KEY = "INPUT_KEY_HERE"
+AWS_SECRET_KEY = "INPUT_KEY_HERE"
 
 class DataUploadStreamListener(tweepy.StreamListener):
 

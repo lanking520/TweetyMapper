@@ -5,9 +5,9 @@ import boto3
 import json
 import time
 
-alchemy_api_key = "f2a40969214d57623993c2f998ef7bdf12d8062f"
-AWS_ACCESS_KEY = "AKIAI3AUPHHLWCOUUKMA"
-AWS_SECRET_KEY = "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"
+alchemy_api_key = "INPUT_KEY_HERE"
+AWS_ACCESS_KEY = "INPUT_KEY_HERE"
+AWS_SECRET_KEY = "INPUT_KEY_HERE"
 
 class SQSSNSWorkerPool:
     def __init__(self, num_threads=2):
