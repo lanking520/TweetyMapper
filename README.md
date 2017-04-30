@@ -3,9 +3,13 @@ Qing Lan and Xiyan Liu
 
 HW Group 18
 ### Note
-Click [TweetyMapper](http://lowcost-env.k37mkpdspy.us-east-1.elasticbeanstalk.com/) to go to our Web App
+Click [TweetyMapper](http://lanking.me/TweetyMapper) to go to our Web App
 
 Deployed on Elastic Beanstalk, built on Flask web framework. 
+
+Using IBM-Watson API to Predict Sentiment of the Tweets.
+
+Using Kafka/SQS with SNS to update tweets.
 
 Tweets are streamed using Twitter Streaming API via Tweepy.
 
