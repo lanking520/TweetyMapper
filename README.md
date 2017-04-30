@@ -2,6 +2,7 @@
 Qing Lan and Xiyan Liu
 
 HW Group 18
+![alt text]()
 ### Note
 Click [TweetyMapper](http://lanking.me/TweetyMapper) to go to our Web App
 
