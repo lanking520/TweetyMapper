@@ -4,7 +4,7 @@ Qing Lan and Xiyan Liu
 HW Group 18
 ![alt text](https://github.com/lanking520/TweetyMapper/raw/master/Demo.png)
 ### Note
-Click [TweetyMapper](http://lanking.me/TweetyMapper) to go to our Web App
+Click [TweetyMapper](http://lanking520.github.io/TweetyMapper) to go to our Web App
 
 Deployed on Elastic Beanstalk, built on Flask web framework. 
 
